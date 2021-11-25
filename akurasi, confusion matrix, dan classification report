@@ -1,0 +1,24 @@
+import pandas as pd
+from sklearn.neural_network import MLPClassifier
+from sklearn.model_selection import train_test_split
+from sklearn.metrics import accuracy_score,classification_report,confusion_matrix
+mlp = MLPClassifier()
+mlp.fit (kriteria,output)
+mlp.predict(kriteria)
+col_names = ['Frequency','impedance','Phase','Real','Imaginar','Magnitude','Value']
+dataset = pd.read_csv('/content/DataPengukuranPisang.csv',names=col_names)
+dataset.head()
+kriteria=dataset.drop('Value',axis=1)
+kriteria.head()
+output=dataset.Value
+y_prediksi = mlp.predict (kriteria)
+print ('akurasi',accuracy_score(output,y_prediksi))
+print ('hasilnya :',classification_report(output,y_prediksi))
+confusion_matrix(output,y_prediksi)
+X_train,X_test,Y_train,Y_test = train_test_split(kriteria,output,test_size = 0.8)
+mlp.fit(X_train,Y_train)
+y_prediksi = mlp.predict(X_test)
+print ('akurasi',accuracy_score(Y_test,y_prediksi))
+print ('hasilnya :',classification_report(Y_test,y_prediksi))
+confusion_matrix(Y_test,y_prediksi)
+
